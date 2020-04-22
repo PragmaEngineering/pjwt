@@ -12,13 +12,14 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var SECRET_KEY string
+var SECRET_KEY []byte
 
 func init() {
-	SECRET_KEY = os.Getenv("PRAGMA_JWT_SECRET_KEY")
-	if SECRET_KEY == "" {
+	key := os.Getenv("PRAGMA_JWT_SECRET_KEY")
+	if key == "" {
 		panic("JWT Secret not found in environment")
 	}
+	SECRET_KEY = []byte(key)
 }
 
 type Adapter func(http.Handler) http.Handler
